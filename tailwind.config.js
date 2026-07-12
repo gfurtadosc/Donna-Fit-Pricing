@@ -9,6 +9,7 @@ export default {
         sand: "#D9CDC3",
         cream: "#FAF8F5",
         clay: "#A8815F",
+        mist: "#F0F5F0",
       },
       fontFamily: {
         display: ["Fraunces", "serif"],
@@ -16,6 +17,15 @@ export default {
       },
       borderRadius: {
         DEFAULT: "1rem",
+      },
+      keyframes: {
+        "splash-in": {
+          "0%": { opacity: "0", transform: "scale(0.85)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+      },
+      animation: {
+        "splash-in": "splash-in 500ms ease-out forwards",
       },
     },
   },
