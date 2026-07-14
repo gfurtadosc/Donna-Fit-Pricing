@@ -51,3 +51,12 @@ export function TrashIcon(props: SVGProps<SVGSVGElement>) {
     </BaseIcon>
   );
 }
+
+export function CloseIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M18 6L6 18" />
+      <path d="M6 6l12 12" />
+    </BaseIcon>
+  );
+}
