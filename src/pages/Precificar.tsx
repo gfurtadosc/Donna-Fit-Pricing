@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Layout from "../components/Layout";
 import { BackIcon } from "../components/icons";
 import WizardProgress from "../components/wizard/WizardProgress";
@@ -19,12 +19,35 @@ function getDefaultMarginInput(): string {
   return String(defaultProfitMarginPercent).replace(".", ",");
 }
 
+/** Optional prefill passed by "Duplicar como nova precificação" from a saved recipe. */
+interface PrecificarLocationState {
+  initialProductName?: string;
+  initialItems?: RecipeItem[];
+  initialYieldCount?: number;
+  initialMarginPercent?: number;
+}
+
 export default function Precificar() {
+  const location = useLocation();
+  const initialState = (location.state as PrecificarLocationState | null) ?? {};
+
   const [step, setStep] = useState(1);
-  const [productName, setProductName] = useState("");
-  const [items, setItems] = useState<RecipeItem[]>([]);
-  const [yieldInput, setYieldInput] = useState("");
-  const [marginInput, setMarginInput] = useState<string>(getDefaultMarginInput);
+  const [productName, setProductName] = useState(
+    initialState.initialProductName ?? "",
+  );
+  const [items, setItems] = useState<RecipeItem[]>(
+    initialState.initialItems ?? [],
+  );
+  const [yieldInput, setYieldInput] = useState(
+    initialState.initialYieldCount !== undefined
+      ? String(initialState.initialYieldCount).replace(".", ",")
+      : "",
+  );
+  const [marginInput, setMarginInput] = useState<string>(() =>
+    initialState.initialMarginPercent !== undefined
+      ? String(initialState.initialMarginPercent).replace(".", ",")
+      : getDefaultMarginInput(),
+  );
 
   function handleRestart() {
     setStep(1);
